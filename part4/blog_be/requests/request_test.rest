@@ -1,0 +1,35 @@
+### CREATE A NEW USER
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+{
+  "name" : "mario",
+  "username" : "marietto",
+  "password" : "123"
+}
+
+### LOGIN
+POST http://localhost:3001/api/login
+Content-Type: application/json
+
+{
+  "username": "marietto",
+  "password": "123"
+}
+
+### BLOG ADDITION
+@token1 = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1hcmlldHRvIiwiaWQiOiI2MzYxODU1OWYzY2RmMzBiNmQzMzE2NmIiLCJpYXQiOjE2NjczMzU1Mjh9.IeKCJ0VK4A72PvrEd7PjhN4S35vKYawrkc6pxmaAq7Q
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+Authorization: Bearer {{token1}}
+
+{
+  "title" : "title_fake",
+  "url": "url_fake",
+  "author":"author_fake"
+}
+
+###
+@token2 = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRkZCIsImlkIjoiNjM2MTc4ZDc3MzFlMzY3MmZmMzkyYTA1IiwiaWF0IjoxNjY3MzMyMzE1fQ.HmATswRNezKi4Cm6hq0cWSoAmqw0Dq7oIQPlSMtjUm8
+DELETE http://localhost:3001/api/blogs/636178c7731e3672ff3
+Authorization: Bearer {{token2}}
