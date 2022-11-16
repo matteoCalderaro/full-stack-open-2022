@@ -1,6 +1,7 @@
 
 import { useDispatch } from 'react-redux';
 import { createNewNote } from '../reducers/anecdoteReducer';
+import { removeMessage, setMessage } from './../reducers/notificationReducer';
 
 
 const AnecdoteForm = () => {
@@ -8,7 +9,10 @@ const AnecdoteForm = () => {
 
   const addNote = (e) => {
     e.preventDefault()
-    dispatch(createNewNote(e))
+    dispatch(createNewNote(e.target.note.value))
+    dispatch(setMessage(`You added: '${e.target.note.value}'`))
+    setTimeout(()=>dispatch(removeMessage()),5000)
+    e.target.note.value = ''
   }
 
   return(

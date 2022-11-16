@@ -20,8 +20,8 @@ const asObject = (anecdote) => {
 const initialState = anecdotesAtStart.map(asObject)
 
 const reducer = (state = initialState, action) => {
-  console.log('state now: ', state)
-  console.log('action', action)
+  // console.log('state now: ', state)
+  // console.log('action', action)
   switch(action.type){
     case 'VOTE': {
       const id = action.data
@@ -43,11 +43,11 @@ export const addVote = (id) => {
       data:id
   }
 }
-export const createNewNote = (e) => {
+export const createNewNote = (target) => {
   return {
     type: 'NEW_NOTE',
     data: {
-      content: e.target.note.value,
+      content: target,
       votes: 0,
       id: (Math.random()*1000).toFixed(0) 
     }
