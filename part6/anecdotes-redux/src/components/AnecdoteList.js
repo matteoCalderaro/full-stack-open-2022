@@ -9,7 +9,8 @@ const AnecdoteList = () => {
 
   const anecdotes = useSelector(state => {
     if(!state.filter){
-      return state.anecdotes.sort((p,c)=>c.votes-p.votes)
+      return state.anecdotes.map(a=>a).sort((p,c)=>c.votes-p.votes)
+    
     } else {
       return state.anecdotes.filter(a=>a.content.includes(state.filter)).sort((p,c)=>c.votes-p.votes)
     }

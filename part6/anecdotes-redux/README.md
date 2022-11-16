@@ -108,3 +108,34 @@ const anecdotes = useSelector(state => {
   })
 ```
 
+## Anecdotes and the backend step1 - step2
+
+npm install json-server --save-dev
+
+```
+"scripts": {
+  "server": "json-server -p3001 --watch db.json",
+  // ...
+}
+```
+src\services\anecdoteService.js
+
+```
+const getAll = async () => {
+  let response = await axios.get('http://localhost:3001/anecdotes')
+  return response.data
+}
+```
+src\reducers\anecdoteReducer.js
+```
+setAnecdotes(state,action){
+  return action.payload
+}
+```
+src\App.js
+```
+useEffect(()=> {
+  anecdoteService.getAll()
+    .then(response => dispatch(initializaAnecdotes(response)))
+},[dispatch])
+```
