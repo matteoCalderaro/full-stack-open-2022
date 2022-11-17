@@ -4,7 +4,6 @@ npm install react-redux
 import { Provider } from 'react-redux' <br>
 import { useSelector, useDispatch } from 'react-redux'
 
-----
 
 ### uncontrolled form
 ```
@@ -54,7 +53,6 @@ export const createNewNote = (e) => {
 } 
 ```
 ## better anecdotes step7 - step10
----
 
 npm install @reduxjs/toolkit
 
@@ -118,7 +116,14 @@ npm install json-server --save-dev
   // ...
 }
 ```
-src\services\anecdoteService.js
+>src\App.js
+```
+useEffect(()=> {
+    anecdoteService.getAll()
+     .then(response => dispatch(setAnecdotes(response)))
+  },[dispatch])
+```
+>src\services\anecdoteService.js
 
 ```
 const getAll = async () => {
@@ -126,16 +131,38 @@ const getAll = async () => {
   return response.data
 }
 ```
-src\reducers\anecdoteReducer.js
+>src\reducers\anecdoteReducer.js
 ```
 setAnecdotes(state,action){
   return action.payload
 }
+//---
+export const {setAnecdotes} = anecdoteReducer.actions
 ```
-src\App.js
+## Anecdotes and the backend step3 - step6
+Moving the comunication with the server from the components to the reducers. 
+These kind of async actions can be implemented using the Redux Thunk library. With Redux Thunk it is possible to implement action creators which return a function instead of an object. The function receives Redux store's dispatch and getState methods as parameters. This allows for example implementations of asynchronous action creators, which first wait for the completion of a certain asynchronous operation and after that dispatch some action, which changes the store's state.
+<br>
+npm install redux-thunk
+
+>src\App.js
 ```
 useEffect(()=> {
-  anecdoteService.getAll()
-    .then(response => dispatch(initializaAnecdotes(response)))
-},[dispatch])
+    dispatch(initializaAnecdotes())
+  },[dispatch])
+```
+>src\reducers\anecdoteReducer.js
+```
+setAnecdotes(state,action){
+  return action.payload
+}
+//---
+export const {setAnecdotes} = anecdoteReducer.actions
+//---
+export const initializaAnecdotes = (data) => {
+  return async dispatch => {
+    const anecdotes = await anecdoteService.getAll()
+    return dispatch(setAnecdotes(anecdotes))
+  }
+}
 ```

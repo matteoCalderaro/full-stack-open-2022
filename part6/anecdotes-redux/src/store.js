@@ -14,7 +14,4 @@ const store = configureStore({
 
 store.subscribe(()=>console.log('negozio',store.getState()))
 
-
-
-
 export default store
