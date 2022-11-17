@@ -166,3 +166,67 @@ export const initializaAnecdotes = (data) => {
   }
 }
 ```
+## Anecdotes and connect step1 - grand finale
+Using the connect function instead of the hooks useSelector and useDispatch.
+
+mapStateToProps
+
+<pre>
+import { connect, <del>useSelector</del> } from 'react-redux';
+
+const Notification = (props) => {
+  <del>const message = useSelector(state=>state.notification)</del>
+
+  if(!props.message){
+    return null
+  }
+  
+  return (
+    {props.message}
+    <del>{message}</del>
+  )
+}
+
+const mapStateToProps = (state) => {
+  return {
+    message: state.notification
+  }
+}
+
+export default connect(
+  mapStateToProps
+)(Notification)
+
+<del>export default Notification</del>
+</pre>
+
+mapDispatchToProps
+
+<pre>
+import { <del>useDispatch,</del> connect } from 'react-redux';
+import { changeFilter } from '../reducers/filterReducer';
+
+const Filter = (props) => {
+  <del>const dispatch = useDispatch()</del>
+
+  const handleChange = (e) => {
+    props.changeFilter(e.target.value)
+    <del>dispatch(changeFilter(e.target.value))</del>
+  }
+
+  return(
+    filter: < input onChange={handleChange} />
+  )
+}
+
+const mapDispatchToProps = {
+  changeFilter
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Filter)
+
+<del>export default Filter</del>
+</pre>
