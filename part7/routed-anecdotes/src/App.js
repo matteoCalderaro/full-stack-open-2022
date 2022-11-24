@@ -60,7 +60,7 @@ const useField = (name) => {
   const onChange = (e) => {
     setValue(e.target.value)
   }
-  const reset = () => {
+  const resetForm = () => {
     setValue('')
   }
 
@@ -68,7 +68,7 @@ const useField = (name) => {
     name:name,
     value:value,
     onChange:onChange,
-    reset:reset
+    reset:resetForm
   }
 }
 
@@ -84,7 +84,7 @@ const CreateNew = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    props.addNew({
+    props.addNewAnecdote({
       content: content.value,
       author: author.value,
       info: info.value,
@@ -94,7 +94,7 @@ const CreateNew = (props) => {
     navigate('/')
   }
 
-  const bo = () => {
+  const deleteForm = () => {
     reset()
     author.reset()
     info.reset()
@@ -119,7 +119,7 @@ const CreateNew = (props) => {
         </div>
         <button>create</button>
       </form>
-      <button onClick={bo}>delete</button>
+      <button onClick={deleteForm}>delete</button>
         
     </div>
   )
@@ -150,7 +150,8 @@ const App = () => {
       id: 2
     }
   ])
-
+  
+  //notification---------
   const [notification, setNotification] = useState('')
 
   useEffect(()=>{
@@ -162,25 +163,25 @@ const App = () => {
     setNotification(message)
   }
 
-  const addNew = (anecdote) => {
+  //create ----------------
+  const addNewAnecdote = (anecdote) => {
     anecdote.id = Math.round(Math.random() * 10000)
     console.log(anecdote);
     setAnecdotes(anecdotes.concat(anecdote))
   }
 
-  const anecdoteById = (id) =>
-    anecdotes.find(a => a.id === id)
+  //const anecdoteById = (id) => anecdotes.find(a => a.id === id)
 
-  const vote = (id) => {
-    const anecdote = anecdoteById(id)
+  // const vote = (id) => {
+  //   const anecdote = anecdoteById(id)
 
-    const voted = {
-      ...anecdote,
-      votes: anecdote.votes + 1
-    }
+  //   const voted = {
+  //     ...anecdote,
+  //     votes: anecdote.votes + 1
+  //   }
 
-    setAnecdotes(anecdotes.map(a => a.id === id ? voted : a))
-  }
+  //   setAnecdotes(anecdotes.map(a => a.id === id ? voted : a))
+  // }
 
   return (
     <div>
@@ -194,7 +195,7 @@ const App = () => {
           <Route path='/' element={<AnecdoteList anecdotes={anecdotes} />} />
           <Route path='/anecdotes/:id' element={<Anecdote anecdotes={anecdotes} />} />
           <Route path='/about' element={<About />} />
-          <Route path='/create' element={<CreateNew addNew={addNew} addMessage={addMessage}/>} />
+          <Route path='/create' element={<CreateNew addNewAnecdote={addNewAnecdote} addMessage={addMessage}/>} />
         </Routes>
 
       </Router>

@@ -17,12 +17,11 @@ const useField = (type) => {
 
 const useCountry = (name) => {
   const [country, setCountry] = useState(null)
-  console.log('country',country);
-
+  
   useEffect(()=> {
     if(name){
-      axios.get(`https://restcountries.com/v3.1/name/${name}?fullText=true`)
-        .then(response=>setCountry(response.data[0] ))
+        axios.get(`https://restcountries.com/v3.1/name/${name}?fullText=true`)
+          .then(response=>setCountry(response.data[0] ))
     }
   },[name])
   
@@ -49,7 +48,7 @@ const App = () => {
   const nameInput = useField('text')
   const [name, setName] = useState('')
   const country = useCountry(name)
-  console.log('name',name);
+  //console.log('name',name);
  
 
   const fetch = (e) => {
